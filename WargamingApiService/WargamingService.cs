@@ -66,7 +66,7 @@ namespace WargamingApiService
 {
   public class WargamingService : IWargamingService
   {
-    private readonly string _defaultApiUri = @"api.worldoftanks.ru/wot";
+    private readonly string _defaultApiUri;
     private readonly string _applicationId;
     private readonly Settings _settings;
     private readonly Dictionary<RequestTarget, string> _targets = new Dictionary<RequestTarget, string>();
@@ -75,11 +75,12 @@ namespace WargamingApiService
 
     public WargamingService(){}
 
-    public WargamingService(string applicationId)
+    public WargamingService(string applicationId, Settings settings = null, string apiUri = @"api.worldoftanks.ru/wot")
     {
       _applicationId = applicationId;
-      _settings = new Settings();
-
+      _settings = settings ?? new Settings();
+      _defaultApiUri = apiUri;
+     
       _targets = new Dictionary<RequestTarget, string>
       {
         { RequestTarget.AccountList, "account/list"},
@@ -110,37 +111,19 @@ namespace WargamingApiService
       };
     }
 
-    public WargamingService(string applicationId, Settings settings)
-      : this(applicationId)
-    {
-      _settings = settings;
-    }
-
-    public WargamingService(string applicationId, string apiUri)
-      : this(applicationId)
-    {
-      _defaultApiUri = apiUri;
-    }
-
-    public WargamingService(string applicationId, Settings settings, string apiUri)
-      : this(applicationId, settings)
-    {
-      _defaultApiUri = apiUri;
-    }
-
     #endregion Constructors
 
     #region Account
 
     #region Search Players
 
-    public IResponse SearchPlayers(string searchTerm, SearchType searchType = SearchType.StartsWith, int limit = 100, Language language = Language.RU, string responseFields = "")
+    public IResponse SearchPlayers(string searchTerm, SearchType searchType = SearchType.StartsWith, int limit = 100, Language? language = null, string responseFields = "")
     {
       var requestUri = CreatePlayerSearchRequestUri(searchTerm, language, responseFields, searchType, limit);
       return GetRequestResponse(requestUri);
     }
 
-    private string CreatePlayerSearchRequestUri(string searchTerm, Language language, string responseFields, SearchType searchType, int limit)
+    private string CreatePlayerSearchRequestUri(string searchTerm, Language? language, string responseFields, SearchType searchType, int limit)
     {
       var sb = GetDefaultUri(RequestTarget.AccountList, language, responseFields: responseFields);
 
@@ -155,23 +138,13 @@ namespace WargamingApiService
 
     #region Player Info
 
-    public IResponse GetPlayerInfo(long accountId)
-    {
-      return GetPlayerInfo(new[] { accountId }, _settings.Language, null, null);
-    }
-
-    public IResponse GetPlayerInfo(long[] accountIds)
-    {
-      return GetPlayerInfo(accountIds, _settings.Language, null, null);
-    }
-
-    public IResponse GetPlayerInfo(long[] accountIds, Language language, string accessToken, string responseFields)
+    public IResponse GetPlayerInfo(long[] accountIds, Language? language = null, string accessToken = "", string responseFields = "")
     {
       var requestUri = CreatePlayerDataRequestUri(accountIds, language, accessToken, responseFields);
       return GetRequestResponse(requestUri);
     }
 
-    private string CreatePlayerDataRequestUri(IEnumerable<long> accountIds, Language language, string accessToken, string responseFields)
+    private string CreatePlayerDataRequestUri(IEnumerable<long> accountIds, Language? language, string accessToken, string responseFields)
     {
       var sb = GetDefaultUri(RequestTarget.AccountInfo, language, accessToken, responseFields);
       sb.AppendFormat("&account_id={0}", string.Join(",", accountIds));
@@ -186,28 +159,14 @@ namespace WargamingApiService
     #region Player Ratings
 
     [Obsolete("Method has been removed.")]
-    [ExcludeFromCodeCoverage]
-    public IResponse GetPlayerRatings(long accountId)
-    {
-      return GetPlayerRatings(new[] { accountId });
-    }
-
-    [Obsolete("Method has been removed.")]
-    [ExcludeFromCodeCoverage]
-    public IResponse GetPlayerRatings(long[] accountIds)
-    {
-      return GetPlayerRatings(accountIds, _settings.Language, null, null);
-    }
-
-    [Obsolete("Method has been removed.")]
-    public IResponse GetPlayerRatings(long[] accountIds, Language language, string accessToken, string responseFields)
+    public IResponse GetPlayerRatings(long[] accountIds, Language? language = null, string accessToken = "", string responseFields = "")
     {
       var requestUri = CreatePlayerRatingsRequestUri(accountIds, language, accessToken, responseFields);
       return GetRequestResponse(requestUri);
     }
 
     [ExcludeFromCodeCoverage]
-    private string CreatePlayerRatingsRequestUri(IEnumerable<long> accountIds, Language language, string accessToken, string responseFields)
+    private string CreatePlayerRatingsRequestUri(IEnumerable<long> accountIds, Language? language, string accessToken, string responseFields)
     {
       var sb = GetDefaultUri(RequestTarget.AccountRatings, language, accessToken, responseFields);
       sb.AppendFormat("&account_id={0}", string.Join(",", accountIds));
@@ -231,13 +190,13 @@ namespace WargamingApiService
       return GetPlayerVehicles(accountIds, new long[0], _settings.Language, null, null);
     }
 
-    public IResponse GetPlayerVehicles(long[] accountIds, long[] tankIds, Language language, string accessToken, string responseFields)
+    public IResponse GetPlayerVehicles(long[] accountIds, long[] tankIds, Language? language = null, string accessToken = "", string responseFields = "")
     {
       var requestUri = CreatePlayerVehiclesRequestUri(accountIds, tankIds, language, accessToken, responseFields);
       return GetRequestResponse(requestUri);
     }
 
-    private string CreatePlayerVehiclesRequestUri(IEnumerable<long> accountIds, long[] tankIds, Language language, string accessToken, string responseFields)
+    private string CreatePlayerVehiclesRequestUri(IEnumerable<long> accountIds, long[] tankIds, Language? language, string accessToken, string responseFields)
     {
       var sb = GetDefaultUri(RequestTarget.AccountTanks, language, accessToken, responseFields);
       sb.AppendFormat("&account_id={0}", string.Join(",", accountIds));
@@ -256,23 +215,16 @@ namespace WargamingApiService
 
     public IResponse GetPlayerAchievements(long accountId)
     {
-      var result = GetPlayerAchievements(new[] { accountId });
-
-      return result;
+      return GetPlayerAchievements(new[] { accountId });
     }
 
-    public IResponse GetPlayerAchievements(long[] accountIds)
-    {
-      return GetPlayerAchievements(accountIds, _settings.Language, null, null);
-    }
-
-    public IResponse GetPlayerAchievements(long[] accountIds, Language language, string accessToken, string responseFields)
+    public IResponse GetPlayerAchievements(long[] accountIds, Language? language = null, string accessToken = "", string responseFields = "")
     {
       var requestUri = CreatePlayerAchievementsRequestUri(accountIds, language, accessToken, responseFields);
       return GetRequestResponse(requestUri);
     }
 
-    private string CreatePlayerAchievementsRequestUri(IEnumerable<long> accountIds, Language language, string accessToken, string responseFields)
+    private string CreatePlayerAchievementsRequestUri(IEnumerable<long> accountIds, Language? language, string accessToken, string responseFields)
     {
       var sb = GetDefaultUri(RequestTarget.AccountAchievements, language, accessToken, responseFields);
       sb.AppendFormat("&account_id={0}", string.Join(",", accountIds));
@@ -315,23 +267,13 @@ namespace WargamingApiService
 
     #region Search Clans
 
-    public IResponse SearchClans(string searchTerm)
-    {
-      return SearchClans(searchTerm, _settings.Language, null, 100, null);
-    }
-
-    public IResponse SearchClans(string searchTerm, int limit)
-    {
-      return SearchClans(searchTerm, _settings.Language, null, limit, null);
-    }
-
-    public IResponse SearchClans(string searchTerm, Language language, string responseFields, int limit, string orderby)
+    public IResponse SearchClans(string searchTerm, Language? language = null, string responseFields = "", int limit = 100, string orderby = "")
     {
       var requestUri = CreateClanSearchRequestUri(searchTerm, language, responseFields, limit, orderby);
       return GetRequestResponse(requestUri);
     }
 
-    private string CreateClanSearchRequestUri(string searchTerm, Language language, string responseFields, int limit, string orderby)
+    private string CreateClanSearchRequestUri(string searchTerm, Language? language, string responseFields, int limit, string orderby)
     {
       var sb = GetDefaultUri(RequestTarget.ClanList, language, null, responseFields);
       sb.AppendFormat("&search={0}&limit={1}", searchTerm, limit);
@@ -350,21 +292,16 @@ namespace WargamingApiService
 
     public IResponse GetClanDetails(long clanId)
     {
-      return GetClanDetails(new[] { clanId }, _settings.Language, null, null);
+      return GetClanDetails(new[] { clanId });
     }
 
-    public IResponse GetClanDetails(long[] clanIds)
-    {
-      return GetClanDetails(clanIds, _settings.Language, null, null);
-    }
-
-    public IResponse GetClanDetails(long[] clanIds, Language language, string accessToken, string responseFields)
+    public IResponse GetClanDetails(long[] clanIds, Language? language = null, string accessToken = "", string responseFields = "")
     {
       var requestUri = CreateClanInfoRequestUri(clanIds, language, accessToken, responseFields);
       return GetRequestResponse(requestUri);
     }
 
-    private string CreateClanInfoRequestUri(IEnumerable<long> clanIds, Language language, string accessToken, string responseFields)
+    private string CreateClanInfoRequestUri(IEnumerable<long> clanIds, Language? language, string accessToken, string responseFields)
     {
       var sb = GetDefaultUri(RequestTarget.ClanInfo, language, accessToken, responseFields);
       sb.AppendFormat("&clan_id={0}", string.Join(",", clanIds));
@@ -380,21 +317,16 @@ namespace WargamingApiService
 
     public IResponse GetClansBattles(long clanId)
     {
-      return GetClansBattles(new[] { clanId }, _settings.Language, null, null);
+      return GetClansBattles(new[] { clanId });
     }
 
-    public IResponse GetClansBattles(long[] clanIds)
-    {
-      return GetClansBattles(clanIds, _settings.Language, null, null);
-    }
-
-    public IResponse GetClansBattles(long[] clanIds, Language language, string accessToken, string responseFields)
+    public IResponse GetClansBattles(long[] clanIds, Language? language = null, string accessToken = "", string responseFields = "")
     {
       var requestUri = CreateClanBattlesRequestUri(clanIds, language, accessToken, responseFields);
       return GetRequestResponse(requestUri);
     }
 
-    private string CreateClanBattlesRequestUri(IEnumerable<long> clanIds, Language language, string accessToken, string responseFields)
+    private string CreateClanBattlesRequestUri(IEnumerable<long> clanIds, Language? language = null, string accessToken = "", string responseFields = "")
     {
       var sb = GetDefaultUri(RequestTarget.ClanBattles, language, accessToken, responseFields);
       sb.AppendFormat("&clan_id={0}", string.Join(",", clanIds));
@@ -408,23 +340,13 @@ namespace WargamingApiService
 
     #region Top Clans by Victory Points
 
-    public IResponse GetTopClansByVictoryPoints()
-    {
-      return GetTopClansByVictoryPoints(TimeDelta.Season);
-    }
-
-    public IResponse GetTopClansByVictoryPoints(TimeDelta time)
-    {
-      return GetTopClansByVictoryPoints(time, _settings.Language, null);
-    }
-
-    public IResponse GetTopClansByVictoryPoints(TimeDelta time, Language language, string responseFields)
+    public IResponse GetTopClansByVictoryPoints(TimeDelta time = TimeDelta.Season, Language? language = null, string responseFields = "")
     {
       var requestUri = CreateTopClansByVictoryPointsRequestUri(time, language, responseFields);
       return GetRequestResponse(requestUri);
     }
 
-    private string CreateTopClansByVictoryPointsRequestUri(TimeDelta time, Language language, string responseFields)
+    private string CreateTopClansByVictoryPointsRequestUri(TimeDelta time, Language? language, string responseFields)
     {
       var sb = GetDefaultUri(RequestTarget.ClanTop, language, responseFields: responseFields);
       sb.AppendFormat("&time={0}", time == TimeDelta.Step ? "current_step" : "current_season");
@@ -438,18 +360,13 @@ namespace WargamingApiService
 
     #region Clan's Provinces
 
-    public IResponse GetClansProvinces(long clanId)
-    {
-      return GetClansProvinces(clanId, _settings.Language, null, null);
-    }
-
-    public IResponse GetClansProvinces(long clanId, Language language, string accessToken, string responseFields)
+    public IResponse GetClansProvinces(long clanId, Language? language = null, string accessToken = "", string responseFields = "")
     {
       var requestUri = CreateClansProvincesRequestUri(clanId, language, accessToken, responseFields);
       return GetRequestResponse(requestUri);
     }
 
-    private string CreateClansProvincesRequestUri(long clanId, Language language, string accessToken, string responseFields)
+    private string CreateClansProvincesRequestUri(long clanId, Language? language = null, string accessToken = "", string responseFields = "")
     {
       var sb = GetDefaultUri(RequestTarget.ClanProvinces, language, accessToken, responseFields);
       sb.AppendFormat("&clan_id={0}", clanId);
@@ -464,25 +381,13 @@ namespace WargamingApiService
     #region Clan's Victory Points
 
     [Obsolete("Warning. This method is deprecated and will be removed soon.")]
-    public IResponse GetClansVictoryPoints(long clanId)
-    {
-      return GetClansVictoryPoints(new[] { clanId }, _settings.Language, null, null);
-    }
-
-    [Obsolete("Warning. This method is deprecated and will be removed soon.")]
-    public IResponse GetClansVictoryPoints(long[] clanIds)
-    {
-      return GetClansVictoryPoints(clanIds, _settings.Language, null, null);
-    }
-
-    [Obsolete("Warning. This method is deprecated and will be removed soon.")]
-    public IResponse GetClansVictoryPoints(long[] clanIds, Language language, string accessToken, string responseFields)
+    public IResponse GetClansVictoryPoints(long[] clanIds, Language? language = null, string accessToken = "", string responseFields = "")
     {
       var requestUri = CreateClansVictoryPointsRequestUri(clanIds, language, accessToken, responseFields);
       return GetRequestResponse(requestUri);
     }
 
-    private string CreateClansVictoryPointsRequestUri(IEnumerable<long> clanIds, Language language, string accessToken, string responseFields)
+    private string CreateClansVictoryPointsRequestUri(IEnumerable<long> clanIds, Language? language, string accessToken, string responseFields)
     {
       var sb = GetDefaultUri(RequestTarget.ClanVictorypoints, language, accessToken, responseFields);
       sb.AppendFormat("&clan_id={0}", string.Join(",", clanIds));
@@ -496,23 +401,18 @@ namespace WargamingApiService
 
     #region Clan Member Details
 
-    public IResponse GetClanMemberInfo(long memberId)
+    public IResponse GetClanMemberInfo(long memberIds)
     {
-      return GetClanMemberInfo(new[] { memberId }, _settings.Language, null, null);
+      return GetClanMemberInfo(new[] { memberIds });
     }
 
-    public IResponse GetClanMemberInfo(long[] memberIds)
-    {
-      return GetClanMemberInfo(memberIds, _settings.Language, null, null);
-    }
-
-    public IResponse GetClanMemberInfo(long[] memberIds, Language language, string accessToken, string responseFields)
+    public IResponse GetClanMemberInfo(long[] memberIds, Language? language = null, string accessToken = "", string responseFields = "")
     {
       var requestUri = CreateClanMemberInfoRequestUri(memberIds, language, accessToken, responseFields);
       return GetRequestResponse(requestUri);
     }
 
-    private string CreateClanMemberInfoRequestUri(IEnumerable<long> memberIds, Language language, string accessToken, string responseFields)
+    private string CreateClanMemberInfoRequestUri(IEnumerable<long> memberIds, Language? language, string accessToken, string responseFields)
     {
       var sb = GetDefaultUri(RequestTarget.ClanMembersinfo, language, accessToken, responseFields);
       sb.AppendFormat("&member_id={0}", string.Join(",", memberIds));
@@ -530,18 +430,13 @@ namespace WargamingApiService
 
     #region List Vehicles
 
-    public IResponse GetAllVehicles()
-    {
-      return GetAllVehicles(_settings.Language, null);
-    }
-
-    public IResponse GetAllVehicles(Language language, string responseFields)
+    public IResponse GetAllVehicles(Language? language = null, string responseFields = "")
     {
       var requestUri = CreateAllVehiclesRequestUri(language, responseFields);
       return GetRequestResponse(requestUri);
     }
 
-    private string CreateAllVehiclesRequestUri(Language language, string responseFields)
+    private string CreateAllVehiclesRequestUri(Language? language, string responseFields)
     {
       var sb = GetDefaultUri(RequestTarget.EncyclopediaTanks, language, responseFields: responseFields);
 
@@ -559,18 +454,13 @@ namespace WargamingApiService
       return GetVehicleDetails(new[] { tankId }, _settings.Language, null);
     }
 
-    public IResponse GetVehicleDetails(long[] tankIds)
-    {
-      return GetVehicleDetails(tankIds, _settings.Language, null);
-    }
-
-    public IResponse GetVehicleDetails(long[] tankIds, Language language, string responseFields)
+    public IResponse GetVehicleDetails(long[] tankIds, Language? language = null, string responseFields = "")
     {
       var requestUri = CreateVehicleDetailssRequestUri(tankIds, language, responseFields);
       return GetRequestResponse(requestUri);
     }
 
-    private string CreateVehicleDetailssRequestUri(IEnumerable<long> tankIds, Language language, string responseFields)
+    private string CreateVehicleDetailssRequestUri(IEnumerable<long> tankIds, Language? language, string responseFields)
     {
       var sb = GetDefaultUri(RequestTarget.EncyclopediaTankinfo, language, responseFields: responseFields);
       sb.AppendFormat("&tank_id={0}", string.Join(",", tankIds));
@@ -584,28 +474,18 @@ namespace WargamingApiService
 
     #region Engines
 
-    public IResponse GetEngines()
-    {
-      return GetEngines(new long[0], _settings.Language, Nation.All, null);
-    }
-
     public IResponse GetEngines(long moduleId)
     {
       return GetEngines(new[] { moduleId });
     }
 
-    public IResponse GetEngines(long[] moduleIds)
-    {
-      return GetEngines(moduleIds, _settings.Language, Nation.All, null);
-    }
-
-    public IResponse GetEngines(long[] moduleIds, Language language, Nation nation, string responseFields)
+    public IResponse GetEngines(long[] moduleIds, Language? language = null, Nation nation = Nation.All, string responseFields = "")
     {
       var requestUri = CreateEnginesRequestUri(moduleIds, language, nation, responseFields);
       return GetRequestResponse(requestUri);
     }
 
-    private string CreateEnginesRequestUri(long[] moduleIds, Language language, Nation nation, string responseFields)
+    private string CreateEnginesRequestUri(long[] moduleIds, Language? language, Nation nation, string responseFields)
     {
       var sb = GetDefaultUri(RequestTarget.EncyclopediaTankengines, language, responseFields: responseFields);
 
@@ -624,28 +504,18 @@ namespace WargamingApiService
 
     #region Turrets
 
-    public IResponse GetTurrets()
-    {
-      return GetTurrets(new long[0], _settings.Language, Nation.All, null);
-    }
-
     public IResponse GetTurrets(long moduleId)
     {
       return GetTurrets(new[] { moduleId });
     }
 
-    public IResponse GetTurrets(long[] moduleIds)
-    {
-      return GetTurrets(moduleIds, _settings.Language, Nation.All, null);
-    }
-
-    public IResponse GetTurrets(long[] moduleIds, Language language, Nation nation, string responseFields)
+    public IResponse GetTurrets(long[] moduleIds, Language? language = null, Nation nation = Nation.All, string responseFields = "")
     {
       var requestUri = CreateTurretsRequestUri(moduleIds, language, nation, responseFields);
       return GetRequestResponse(requestUri);
     }
 
-    private string CreateTurretsRequestUri(long[] moduleIds, Language language, Nation nation, string responseFields)
+    private string CreateTurretsRequestUri(long[] moduleIds, Language? language, Nation nation, string responseFields)
     {
       var sb = GetDefaultUri(RequestTarget.EncyclopediaTankturrets, language, responseFields: responseFields);
 
@@ -664,28 +534,18 @@ namespace WargamingApiService
 
     #region Radios
 
-    public IResponse GetRadios()
-    {
-      return GetRadios(new long[0], _settings.Language, Nation.All, null);
-    }
-
     public IResponse GetRadios(long moduleId)
     {
       return GetRadios(new[] { moduleId });
     }
 
-    public IResponse GetRadios(long[] moduleIds)
-    {
-      return GetRadios(moduleIds, _settings.Language, Nation.All, null);
-    }
-
-    public IResponse GetRadios(long[] moduleIds, Language language, Nation nation, string responseFields)
+    public IResponse GetRadios(long[] moduleIds, Language? language = null, Nation nation = Nation.All, string responseFields = "")
     {
       var requestUri = CreateRadiosRequestUri(moduleIds, language, nation, responseFields);
       return GetRequestResponse(requestUri);
     }
 
-    private string CreateRadiosRequestUri(long[] moduleIds, Language language, Nation nation, string responseFields)
+    private string CreateRadiosRequestUri(long[] moduleIds, Language? language, Nation nation, string responseFields)
     {
       var sb = GetDefaultUri(RequestTarget.EncyclopediaTankradios, language, responseFields: responseFields);
 
@@ -704,28 +564,18 @@ namespace WargamingApiService
 
     #region Suspensions
 
-    public IResponse GetSuspensions()
-    {
-      return GetSuspensions(new long[0], _settings.Language, Nation.All, null);
-    }
-
     public IResponse GetSuspensions(long moduleId)
     {
       return GetSuspensions(new[] { moduleId });
     }
 
-    public IResponse GetSuspensions(long[] moduleIds)
-    {
-      return GetSuspensions(moduleIds, _settings.Language, Nation.All, null);
-    }
-
-    public IResponse GetSuspensions(long[] moduleIds, Language language, Nation nation, string responseFields)
+    public IResponse GetSuspensions(long[] moduleIds, Language? language = null, Nation nation = Nation.All, string responseFields = "")
     {
       var requestUri = CreateSuspensionsRequestUri(moduleIds, language, nation, responseFields);
       return GetRequestResponse(requestUri);
     }
 
-    private string CreateSuspensionsRequestUri(long[] moduleIds, Language language, Nation nation, string responseFields)
+    private string CreateSuspensionsRequestUri(long[] moduleIds, Language? language, Nation nation, string responseFields)
     {
       var sb = GetDefaultUri(RequestTarget.EncyclopediaTankchassis, language, responseFields: responseFields);
 
@@ -744,28 +594,18 @@ namespace WargamingApiService
 
     #region Guns
 
-    public IResponse GetGuns()
-    {
-      return GetGuns(new long[0], _settings.Language, Nation.All, null);
-    }
-
     public IResponse GetGuns(long moduleId)
     {
       return GetGuns(new[] { moduleId });
     }
 
-    public IResponse GetGuns(long[] moduleIds)
-    {
-      return GetGuns(moduleIds, _settings.Language, Nation.All, null);
-    }
-
-    public IResponse GetGuns(long[] moduleIds, Language language, Nation nation, string responseFields)
+    public IResponse GetGuns(long[] moduleIds, Language? language = null, Nation nation = Nation.All, string responseFields = "")
     {
       var requestUri = CreateGunsRequestUri(moduleIds, language, nation, responseFields);
       return GetRequestResponse(requestUri);
     }
 
-    private string CreateGunsRequestUri(long[] moduleIds, Language language, Nation nation, string responseFields)
+    private string CreateGunsRequestUri(long[] moduleIds, Language? language, Nation nation, string responseFields)
     {
       var sb = GetDefaultUri(RequestTarget.EncyclopediaTankguns, language, responseFields: responseFields);
 
@@ -784,18 +624,13 @@ namespace WargamingApiService
 
     #region Achievements
 
-    public IResponse GetAchievements()
-    {
-      return GetAchievements(_settings.Language, null);
-    }
-
-    public IResponse GetAchievements(Language language, string responseFields)
+    public IResponse GetAchievements(Language? language = null, string responseFields = "")
     {
       var requestUri = CreateAchievementsRequestUri(language, responseFields);
       return GetRequestResponse(requestUri);
     }
 
-    private string CreateAchievementsRequestUri(Language language, string responseFields)
+    private string CreateAchievementsRequestUri(Language? language, string responseFields)
     {
       var sb = GetDefaultUri(RequestTarget.EncyclopediaAchievements, language, responseFields);
       var requestUri = sb.ToString();
@@ -811,18 +646,13 @@ namespace WargamingApiService
 
     #region Vehicle statistics
 
-    public IResponse GetTankStats(long accountId)
-    {
-      return GetTankStats(accountId, new long[0], _settings.Language, null, null, null);
-    }
-
-    public IResponse GetTankStats(long accountId, long[] tankIds, Language language, string responseFields, string accessToken, bool? inGarage)
+    public IResponse GetTankStats(long accountId, long[] tankIds, Language? language = null, string responseFields = "", string accessToken = "", bool? inGarage = null)
     {
       var requestUri = CreateTankStatsRequestUri(accountId, tankIds, language, accessToken, responseFields, inGarage);
       return GetRequestResponse(requestUri);
     }
 
-    private string CreateTankStatsRequestUri(long accountId, long[] tankIds, Language language, string accessToken, string responseFields, bool? inGarage)
+    private string CreateTankStatsRequestUri(long accountId, long[] tankIds, Language? language, string accessToken, string responseFields, bool? inGarage)
     {
       var sb = GetDefaultUri(RequestTarget.TanksStats, language, accessToken, responseFields);
       sb.AppendFormat("&account_id={0}", accountId);
@@ -842,18 +672,13 @@ namespace WargamingApiService
 
     #region Vehicle achievements
 
-    public IResponse GetTankAchievements(long accountId)
-    {
-      return GetTankAchievements(accountId, new long[0], _settings.Language, null, null, null);
-    }
-
-    public IResponse GetTankAchievements(long accountId, long[] tankIds, Language language, string responseFields, string accessToken, bool? inGarage)
+    public IResponse GetTankAchievements(long accountId, long[] tankIds, Language? language = null, string responseFields = "", string accessToken = "", bool? inGarage = null)
     {
       var requestUri = CreateTankAchievementsRequestUri(accountId, tankIds, language, accessToken, responseFields, inGarage);
       return GetRequestResponse(requestUri);
     }
 
-    private string CreateTankAchievementsRequestUri(long accountId, long[] tankIds, Language language, string accessToken, string responseFields, bool? inGarage)
+    private string CreateTankAchievementsRequestUri(long accountId, long[] tankIds, Language? language, string accessToken, string responseFields, bool? inGarage)
     {
       var sb = GetDefaultUri(RequestTarget.TanksAchievements, language, accessToken, responseFields);
       sb.AppendFormat("&account_id={0}", accountId);
@@ -875,9 +700,12 @@ namespace WargamingApiService
 
     #region General methods
 
-    private StringBuilder GetDefaultUri(RequestTarget target, Language language, string accessToken = null, string responseFields = null)
+    private StringBuilder GetDefaultUri(RequestTarget target, Language? language, string accessToken = null, string responseFields = null)
     {
-      var languageField = GetLanguageName(language);
+      if (language == null)
+        language = _settings.Language;
+
+      var languageField = GetLanguageName(language.Value);
 
       var sb = new StringBuilder(_settings.RequestProtocol == RequestProtocol.Http ? "http://" : "https://");
 

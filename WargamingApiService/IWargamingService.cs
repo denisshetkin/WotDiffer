@@ -55,9 +55,7 @@ namespace WargamingApiService
   [ServiceContract]
   public interface IWargamingService
   {
-    #region Account
-
-    #region Search Players
+    #region Player
 
     /// <summary>
     /// Method returns partial list of players. The list is filtered by initial characters of user name and sorted alphabetically.
@@ -69,25 +67,7 @@ namespace WargamingApiService
     /// <param name="responseFields">fields to be returned.</param>
     /// <returns></returns>
     [OperationContract]
-    IResponse SearchPlayers(string searchTerm, SearchType searchType, int limit, Language language, string responseFields);
-
-    #endregion Search Players
-
-    #region Player Info
-
-    /// <summary>
-    /// Method returns player details.
-    /// </summary>
-    /// <param name="accountId">player account id</param>
-    /// <returns></returns>
-    IResponse GetPlayerInfo(long accountId);
-
-    /// <summary>
-    /// Method returns player details.
-    /// </summary>
-    /// <param name="accountIds">list of player account ids</param>
-    /// <returns></returns>
-    IResponse GetPlayerInfo(long[] accountIds);
+    IResponse SearchPlayers(string searchTerm, SearchType searchType, int limit, Language? language, string responseFields);
 
     /// <summary>
     /// Method returns player details.
@@ -97,27 +77,7 @@ namespace WargamingApiService
     /// <param name="accessToken">access token</param>
     /// <param name="responseFields">fields to be returned. Null or string.Empty for all</param>
     /// <returns></returns>
-    IResponse GetPlayerInfo(long[] accountIds, Language language, string accessToken, string responseFields);
-
-    #endregion Player Info
-
-    #region Player Ratings
-
-    /// <summary>
-    /// Method returns details on player's ratings.
-    /// </summary>
-    /// <param name="accountId">player account id</param>
-    /// <returns></returns>
-    [Obsolete("Method is deprecated and will be removed soon.")]
-    IResponse GetPlayerRatings(long accountId);
-
-    /// <summary>
-    /// Method returns details on player's ratings.
-    /// </summary>
-    /// <param name="accountIds">list of player account ids</param>
-    /// <returns></returns>
-    [Obsolete("Method is deprecated and will be removed soon.")]
-    IResponse GetPlayerRatings(long[] accountIds);
+    IResponse GetPlayerInfo(long[] accountIds, Language? language, string accessToken, string responseFields);
 
     /// <summary>
     /// Method returns details on player's ratings.
@@ -128,25 +88,7 @@ namespace WargamingApiService
     /// <param name="responseFields">fields to be returned. Null or string.Empty for all</param>
     /// <returns></returns>
     [Obsolete("Method is deprecated and will be removed soon.")]
-    IResponse GetPlayerRatings(long[] accountIds, Language language, string accessToken, string responseFields);
-
-    #endregion Player Ratings
-
-    #region Player Tanks
-
-    /// <summary>
-    /// Method returns details on player's vehicles.
-    /// </summary>
-    /// <param name="accountId">player account id</param>
-    /// <returns></returns>
-    IResponse GetPlayerVehicles(long accountId);
-
-    /// <summary>
-    /// Method returns details on player's vehicles.
-    /// </summary>
-    /// <param name="accountIds">list of player account ids</param>
-    /// <returns></returns>
-    IResponse GetPlayerVehicles(long[] accountIds);
+    IResponse GetPlayerRatings(long[] accountIds, Language? language, string accessToken, string responseFields);
 
     /// <summary>
     /// Method returns details on player's vehicles.
@@ -157,25 +99,7 @@ namespace WargamingApiService
     /// <param name="accessToken">access token</param>
     /// <param name="responseFields">fields to be returned. Null or string.Empty for all</param>
     /// <returns></returns>
-    IResponse GetPlayerVehicles(long[] accountIds, long[] tankIds, Language language, string accessToken, string responseFields);
-
-    #endregion Player Tanks
-
-    #region Player Achievements
-
-    /// <summary>
-    /// Returns a list of player achievements.
-    /// </summary>
-    /// <param name="accountId">player account id</param>
-    /// <returns></returns>
-    IResponse GetPlayerAchievements(long accountId);
-
-    /// <summary>
-    /// Returns a list of player achievements.
-    /// </summary>
-    /// <param name="accountId">list of player account ids</param>
-    /// <returns></returns>
-    IResponse GetPlayerAchievements(long[] accountId);
+    IResponse GetPlayerVehicles(long[] accountIds, long[] tankIds, Language? language, string accessToken, string responseFields);
 
     /// <summary>
     /// Returns a list of player achievements.
@@ -185,11 +109,9 @@ namespace WargamingApiService
     /// <param name="accessToken">access token</param>
     /// <param name="responseFields">fields to be returned. Null or string.Empty for all</param>
     /// <returns></returns>
-    IResponse GetPlayerAchievements(long[] accountIds, Language language, string accessToken, string responseFields);
+    IResponse GetPlayerAchievements(long[] accountIds, Language? language, string accessToken, string responseFields);
 
-    #endregion Player Achievements
-
-    #endregion Account
+    #endregion Player
 
     #region Authentication
 
@@ -220,24 +142,7 @@ namespace WargamingApiService
 
     #endregion Authentication
 
-    #region Clans
-
-    #region Search Clans
-
-    /// <summary>
-    /// Method returns partial list of clans filtered by initial characters of clan name or tag. The list is sorted by clan nameby default.
-    /// </summary>
-    /// <param name="searchTerm">search string</param>
-    /// <returns></returns>
-    IResponse SearchClans(string searchTerm);
-
-    /// <summary>
-    /// Method returns partial list of clans filtered by initial characters of clan name or tag. The list is sorted by clan nameby default.
-    /// </summary>
-    /// <param name="searchTerm">search string</param>
-    /// <param name="limit">Maximum number of results to be returned. limit max value is 100</param>
-    /// <returns></returns>
-    IResponse SearchClans(string searchTerm, int limit);
+    #region Clan
 
     /// <summary>
     /// Method returns partial list of clans filtered by initial characters of clan name or tag. 
@@ -248,25 +153,7 @@ namespace WargamingApiService
     /// <param name="limit">Maximum number of results to be returned. limit max value is 100</param>
     /// <param name="orderby">The list is sorted by clan name (default), creation date, tag, or size.</param>
     /// <returns></returns>
-    IResponse SearchClans(string searchTerm, Language language, string responseFields, int limit, string orderby);
-
-    #endregion Search Clans
-
-    #region Clan Details
-
-    /// <summary>
-    /// Method returns clan details.
-    /// </summary>
-    /// <param name="clanId">clan id</param>
-    /// <returns></returns>
-    IResponse GetClanDetails(long clanId);
-
-    /// <summary>
-    /// Method returns clan details.
-    /// </summary>
-    /// <param name="clanIds">list of clan ids</param>
-    /// <returns></returns>
-    IResponse GetClanDetails(long[] clanIds);
+    IResponse SearchClans(string searchTerm, Language? language, string responseFields, int limit, string orderby);
 
     /// <summary>
     /// Method returns clan details.
@@ -276,25 +163,7 @@ namespace WargamingApiService
     /// <param name="accessToken">access token</param>
     /// <param name="responseFields">fields to be returned. Null or string.Empty for all</param>
     /// <returns></returns>
-    IResponse GetClanDetails(long[] clanIds, Language language, string accessToken, string responseFields);
-
-    #endregion Clan Details
-
-    #region Clan's Battles
-
-    /// <summary>
-    /// Method returns list of clan's battles.
-    /// </summary>
-    /// <param name="clanId">clan id</param>
-    /// <returns></returns>
-    IResponse GetClansBattles(long clanId);
-
-    /// <summary>
-    /// Method returns list of clan's battles.
-    /// </summary>
-    /// <param name="clanIds">list of clan ids</param>
-    /// <returns></returns>
-    IResponse GetClansBattles(long[] clanIds);
+    IResponse GetClanDetails(long[] clanIds, Language? language, string accessToken, string responseFields);
 
     /// <summary>
     /// Method returns list of clan's battles.
@@ -304,24 +173,7 @@ namespace WargamingApiService
     /// <param name="accessToken">access token</param>
     /// <param name="responseFields">fields to be returned. Null or string.Empty for all</param>
     /// <returns></returns>
-    IResponse GetClansBattles(long[] clanIds, Language language, string accessToken, string responseFields);
-
-    #endregion Clan's Battles
-
-    #region Top Clans by Victory Points
-
-    /// <summary>
-    /// Method returns top 100 clans sorted by rating.
-    /// </summary>
-    /// <returns></returns>
-    IResponse GetTopClansByVictoryPoints();
-
-    /// <summary>
-    /// Method returns top 100 clans sorted by rating.
-    /// </summary>
-    /// <param name="time">Time delta. Valid values: current_season (default), current_step</param>
-    /// <returns></returns>
-    IResponse GetTopClansByVictoryPoints(TimeDelta time);
+    IResponse GetClansBattles(long[] clanIds, Language? language, string accessToken, string responseFields);
 
     /// <summary>
     /// Method returns top 100 clans sorted by rating.
@@ -330,18 +182,7 @@ namespace WargamingApiService
     /// <param name="language">language</param>
     /// <param name="responseFields">fields to be returned. Null or string.Empty for all</param>
     /// <returns></returns>
-    IResponse GetTopClansByVictoryPoints(TimeDelta time, Language language, string responseFields);
-
-    #endregion Top Clans by Victory Points
-
-    #region Clan's Provinces
-
-    /// <summary>
-    /// Method returns list of clan's provinces.
-    /// </summary>
-    /// <param name="clanId">clan id</param>
-    /// <returns></returns>
-    IResponse GetClansProvinces(long clanId);
+    IResponse GetTopClansByVictoryPoints(TimeDelta time, Language? language, string responseFields);
 
     /// <summary>
     /// Method returns list of clan's provinces.
@@ -351,25 +192,7 @@ namespace WargamingApiService
     /// <param name="accessToken">access token</param>
     /// <param name="responseFields">fields to be returned. Null or string.Empty for all</param>
     /// <returns></returns>
-    IResponse GetClansProvinces(long clanId, Language language, string accessToken, string responseFields);
-
-    #endregion Clan's Provinces
-
-    #region Clan's Victory Points
-
-    /// <summary>
-    /// Method returns number of clan victory points.
-    /// </summary>
-    /// <param name="clanId">clan id</param>
-    /// <returns></returns>
-    IResponse GetClansVictoryPoints(long clanId);
-
-    /// <summary>
-    /// Method returns number of clan victory points.
-    /// </summary>
-    /// <param name="clanIds">list of clan ids</param>
-    /// <returns></returns>
-    IResponse GetClansVictoryPoints(long[] clanIds);
+    IResponse GetClansProvinces(long clanId, Language? language, string accessToken, string responseFields);
 
     /// <summary>
     /// Method returns number of clan victory points.
@@ -379,25 +202,7 @@ namespace WargamingApiService
     /// <param name="accessToken">access token</param>
     /// <param name="responseFields">fields to be returned. Null or string.Empty for all</param>
     /// <returns></returns>
-    IResponse GetClansVictoryPoints(long[] clanIds, Language language, string accessToken, string responseFields);
-
-    #endregion Clan's Victory Points
-
-    #region Clan Member Details
-
-    /// <summary>
-    /// Method returns clan member info.
-    /// </summary>
-    /// <param name="memberId">member id</param>
-    /// <returns></returns>
-    IResponse GetClanMemberInfo(long memberId);
-
-    /// <summary>
-    /// Method returns clan member info.
-    /// </summary>
-    /// <param name="memberIds">list of clan member ids</param>
-    /// <returns></returns>
-    IResponse GetClanMemberInfo(long[] memberIds);
+    IResponse GetClansVictoryPoints(long[] clanIds, Language? language, string accessToken, string responseFields);
 
     /// <summary>
     /// Method returns clan member info.
@@ -407,21 +212,11 @@ namespace WargamingApiService
     /// <param name="accessToken">access token</param>
     /// <param name="responseFields">fields to be returned. Null or string.Empty for all</param>
     /// <returns></returns>
-    IResponse GetClanMemberInfo(long[] memberIds, Language language, string accessToken, string responseFields);
-
-    #endregion Clan Member Details
+    IResponse GetClanMemberInfo(long[] memberIds, Language? language, string accessToken, string responseFields);
 
     #endregion Clans
 
     #region Encyclopedia
-
-    #region List Vehicles
-
-    /// <summary>
-    /// Method returns list of all vehicles from Tankopedia.
-    /// </summary>
-    /// <returns></returns>
-    IResponse GetAllVehicles();
 
     /// <summary>
     /// Method returns list of all vehicles from Tankopedia.
@@ -429,24 +224,7 @@ namespace WargamingApiService
     /// <param name="language">language</param>
     /// <param name="responseFields">fields to be returned.</param>
     /// <returns></returns>
-    IResponse GetAllVehicles(Language language, string responseFields);
-
-    #endregion List Vehicles
-
-    #region Vehicle Details
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="tankId"></param>
-    /// <returns></returns>
-    IResponse GetVehicleDetails(long tankId);
-
-    /// <summary>
-    /// Method returns list of all vehicles from Tankopedia.
-    /// </summary>
-    /// <returns></returns>
-    IResponse GetVehicleDetails(long[] tankIds);
+    IResponse GetAllVehicles(Language? language, string responseFields);
 
     /// <summary>
     /// Method returns list of all vehicles from Tankopedia.
@@ -455,31 +233,7 @@ namespace WargamingApiService
     /// <param name="language">language</param>
     /// <param name="responseFields">fields to be returned.</param>
     /// <returns></returns>
-    IResponse GetVehicleDetails(long[] tankIds, Language language, string responseFields);
-
-    #endregion Vehicle Details
-
-    #region Engines
-
-    /// <summary>
-    /// Method returns list of engines.
-    /// </summary>
-    /// <returns></returns>
-    IResponse GetEngines();
-
-    /// <summary>
-    /// Method returns list of engines.
-    /// </summary>
-    /// <param name="moduleId">module id - not mandatory</param>
-    /// <returns></returns>
-    IResponse GetEngines(long moduleId);
-
-    /// <summary>
-    /// Method returns list of engines.
-    /// </summary>
-    /// <param name="moduleIds">list of modules - not mandatory</param>
-    /// <returns></returns>
-    IResponse GetEngines(long[] moduleIds);
+    IResponse GetVehicleDetails(long[] tankIds, Language? language, string responseFields);
 
     /// <summary>
     /// Method returns list of engines.
@@ -489,31 +243,7 @@ namespace WargamingApiService
     /// <param name="nation">nation</param>
     /// <param name="responseFields">fields to be returned.</param>
     /// <returns></returns>
-    IResponse GetEngines(long[] moduleIds, Language language, Nation nation, string responseFields);
-
-    #endregion Engines
-
-    #region Turrets
-
-    /// <summary>
-    /// Method returns list of turrets.
-    /// </summary>
-    /// <returns></returns>
-    IResponse GetTurrets();
-
-    /// <summary>
-    /// Method returns list of turrets.
-    /// </summary>
-    /// <param name="moduleId">module id - not mandatory</param>
-    /// <returns></returns>
-    IResponse GetTurrets(long moduleId);
-
-    /// <summary>
-    /// Method returns list of turrets.
-    /// </summary>
-    /// <param name="moduleIds">list of modules - not mandatory</param>
-    /// <returns></returns>
-    IResponse GetTurrets(long[] moduleIds);
+    IResponse GetEngines(long[] moduleIds, Language? language, Nation nation, string responseFields);
 
     /// <summary>
     /// Method returns list of turrets.
@@ -523,31 +253,7 @@ namespace WargamingApiService
     /// <param name="nation">nation</param>
     /// <param name="responseFields">fields to be returned.</param>
     /// <returns></returns>
-    IResponse GetTurrets(long[] moduleIds, Language language, Nation nation, string responseFields);
-
-    #endregion Turrets
-
-    #region Radios
-
-    /// <summary>
-    /// Method returns list of radios.
-    /// </summary>
-    /// <returns></returns>
-    IResponse GetRadios();
-
-    /// <summary>
-    /// Method returns list of radios.
-    /// </summary>
-    /// <param name="moduleId">module id - not mandatory</param>
-    /// <returns></returns>
-    IResponse GetRadios(long moduleId);
-
-    /// <summary>
-    /// Method returns list of radios.
-    /// </summary>
-    /// <param name="moduleIds">list of modules - not mandatory</param>
-    /// <returns></returns>
-    IResponse GetRadios(long[] moduleIds);
+    IResponse GetTurrets(long[] moduleIds, Language? language, Nation nation, string responseFields);
 
     /// <summary>
     /// Method returns list of radios.
@@ -557,31 +263,7 @@ namespace WargamingApiService
     /// <param name="nation">nation</param>
     /// <param name="responseFields">fields to be returned.</param>
     /// <returns></returns>
-    IResponse GetRadios(long[] moduleIds, Language language, Nation nation, string responseFields);
-
-    #endregion Radios
-
-    #region Suspensions
-
-    /// <summary>
-    /// Method returns list of suspensions.
-    /// </summary>
-    /// <returns></returns>
-    IResponse GetSuspensions();
-
-    /// <summary>
-    /// Method returns list of suspensions.
-    /// </summary>
-    /// <param name="moduleId">module id - not mandatory</param>
-    /// <returns></returns>
-    IResponse GetSuspensions(long moduleId);
-
-    /// <summary>
-    /// Method returns list of suspensions.
-    /// </summary>
-    /// <param name="moduleIds">list of modules - not mandatory</param>
-    /// <returns></returns>
-    IResponse GetSuspensions(long[] moduleIds);
+    IResponse GetRadios(long[] moduleIds, Language? language, Nation nation, string responseFields);
 
     /// <summary>
     /// Method returns list of suspensions.
@@ -591,31 +273,7 @@ namespace WargamingApiService
     /// <param name="nation">nation</param>
     /// <param name="responseFields">fields to be returned.</param>
     /// <returns></returns>
-    IResponse GetSuspensions(long[] moduleIds, Language language, Nation nation, string responseFields);
-
-    #endregion Suspensions
-
-    #region Guns
-
-    /// <summary>
-    /// Method returns list of radios.
-    /// </summary>
-    /// <returns></returns>
-    IResponse GetGuns();
-
-    /// <summary>
-    /// Method returns list of radios.
-    /// </summary>
-    /// <param name="moduleId">module id - not mandatory</param>
-    /// <returns></returns>
-    IResponse GetGuns(long moduleId);
-
-    /// <summary>
-    /// Method returns list of radios.
-    /// </summary>
-    /// <param name="moduleIds">list of modules - not mandatory</param>
-    /// <returns></returns>
-    IResponse GetGuns(long[] moduleIds);
+    IResponse GetSuspensions(long[] moduleIds, Language? language, Nation nation, string responseFields);
 
     /// <summary>
     /// Method returns list of radios.
@@ -625,17 +283,7 @@ namespace WargamingApiService
     /// <param name="nation">nation</param>
     /// <param name="responseFields">fields to be returned.</param>
     /// <returns></returns>
-    IResponse GetGuns(long[] moduleIds, Language language, Nation nation, string responseFields);
-
-    #endregion Guns
-
-    #region Achievements
-
-    /// <summary>
-    /// Warning. This method runs in test mode.
-    /// </summary>
-    /// <returns></returns>
-    IResponse GetAchievements();
+    IResponse GetGuns(long[] moduleIds, Language? language, Nation nation, string responseFields);
 
     /// <summary>
     /// Warning. This method runs in test mode.
@@ -643,23 +291,11 @@ namespace WargamingApiService
     /// <param name="language">language</param>
     /// <param name="responseFields">fields to be returned.</param>
     /// <returns></returns>
-    IResponse GetAchievements(Language language, string responseFields);
-
-    #endregion Achievements
+    IResponse GetAchievements(Language? language, string responseFields);
 
     #endregion Encyclopedia
 
-    #region Player's vehicles
-
-    #region Vehicle statistics
-
-    /// <summary>
-    /// Method returns overall statistics, Tank Company statistics, and clan statistics per each vehicle for a user.
-    /// Warning. This method runs in test mode.
-    /// </summary>
-    /// <param name="accountId">account id</param>
-    /// <returns></returns>
-    IResponse GetTankStats(long accountId);
+    #region Player's vehicles Stats and Achievements
 
     /// <summary>
     /// Method returns overall statistics, Tank Company statistics, and clan statistics per each vehicle for each user.
@@ -672,19 +308,8 @@ namespace WargamingApiService
     /// <param name="accessToken">access token</param>
     /// <param name="inGarage">Filter by vehicle availability in the Garage. If the parameter is not specified, all vehicles are returned. Valid values: "1" — Return vehicles available in the Garage. "0" — Return vehicles that are no longer in the Garage.</param>
     /// <returns></returns>
-    IResponse GetTankStats(long accountId, long[] tankIds, Language language, string responseFields, string accessToken, bool? inGarage);
+    IResponse GetTankStats(long accountId, long[] tankIds, Language? language, string responseFields, string accessToken, bool? inGarage);
 
-    #endregion Vehicle statistics
-
-    #region Vehicle achievements
-
-    /// <summary>
-    /// Method returns list of vehicles and achievements per vehicle for a user.
-    /// Warning. This method runs in test mode.
-    /// </summary>
-    /// <param name="accountId">account id</param>
-    /// <returns></returns>
-    IResponse GetTankAchievements(long accountId);
 
     /// <summary>
     /// Method returns list of vehicles and achievements per vehicle a user.
@@ -697,9 +322,7 @@ namespace WargamingApiService
     /// <param name="accessToken">access token</param>
     /// <param name="inGarage">Filter by vehicle availability in the Garage. If the parameter is not specified, all vehicles are returned. Valid values: "1" — Return vehicles available in the Garage. "0" — Return vehicles that are no longer in the Garage.</param>
     /// <returns></returns>
-    IResponse GetTankAchievements(long accountId, long[] tankIds, Language language, string responseFields, string accessToken, bool? inGarage);
-
-    #endregion Vehicle achievements
+    IResponse GetTankAchievements(long accountId, long[] tankIds, Language? language, string responseFields, string accessToken, bool? inGarage);
 
     #endregion Player's vehicles
   }
