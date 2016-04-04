@@ -94,6 +94,8 @@ namespace WotApi
 
     #endregion Search Players
 
+	//asd
+	
     #region Player Info
 
     public List<Player> GetPlayerInfo(long accountId)
