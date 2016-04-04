@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/WargamingTypesLibrary.Enums" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/WargamingTypesLibrary.Enums" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:simpleType name="SearchType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="StartsWith">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Exact">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SearchType" nillable="true" type="tns:SearchType" />
+  <xs:simpleType name="Language">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="EN" />
+      <xs:enumeration value="RU" />
+      <xs:enumeration value="PL" />
+      <xs:enumeration value="DE" />
+      <xs:enumeration value="FR" />
+      <xs:enumeration value="ES" />
+      <xs:enumeration value="ZH_CN" />
+      <xs:enumeration value="TR" />
+      <xs:enumeration value="CS" />
+      <xs:enumeration value="TH" />
+      <xs:enumeration value="VI" />
+      <xs:enumeration value="KO" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Language" nillable="true" type="tns:Language" />
+</xs:schema>

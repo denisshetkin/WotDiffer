@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{254F4E3C-7D30-4AF2-B26B-90493D1FD33C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WargamingApiManager</RootNamespace>
+    <AssemblyName>WargamingApiManager</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entities\BaseStatistics.cs" />
+    <Compile Include="Entities\ClanDetails\Battle.cs" />
+    <Compile Include="Entities\ClanDetails\Clan.cs" />
+    <Compile Include="Entities\ClanDetails\Emblem.cs" />
+    <Compile Include="Entities\ClanDetails\Member.cs" />
+    <Compile Include="Entities\ClanDetails\Province.cs" />
+    <Compile Include="Entities\EncyclopediaDetails\Achievement.cs" />
+    <Compile Include="Entities\EncyclopediaDetails\Module.cs" />
+    <Compile Include="Entities\EncyclopediaDetails\Vehicle.cs" />
+    <Compile Include="Entities\EncyclopediaDetails\WorldOfTanks\Achievement.cs" />
+    <Compile Include="Entities\EncyclopediaDetails\WorldOfTanks\AchievementOption.cs" />
+    <Compile Include="Entities\EncyclopediaDetails\WorldOfTanks\Achievements\AchievementOption.cs" />
+    <Compile Include="Entities\EncyclopediaDetails\WorldOfTanks\Achievements\TankAchievement.cs" />
+    <Compile Include="Entities\EncyclopediaDetails\WorldOfTanks\Chassis.cs" />
+    <Compile Include="Entities\EncyclopediaDetails\WorldOfTanks\Engine.cs" />
+    <Compile Include="Entities\EncyclopediaDetails\WorldOfTanks\Gun.cs" />
+    <Compile Include="Entities\EncyclopediaDetails\WorldOfTanks\Modules\Chassis.cs" />
+    <Compile Include="Entities\EncyclopediaDetails\WorldOfTanks\Modules\Engine.cs" />
+    <Compile Include="Entities\EncyclopediaDetails\WorldOfTanks\Modules\Gun.cs" />
+    <Compile Include="Entities\EncyclopediaDetails\WorldOfTanks\Modules\Radio.cs" />
+    <Compile Include="Entities\EncyclopediaDetails\WorldOfTanks\Modules\TankModule.cs" />
+    <Compile Include="Entities\EncyclopediaDetails\WorldOfTanks\Modules\Turret.cs" />
+    <Compile Include="Entities\EncyclopediaDetails\WorldOfTanks\Radio.cs" />
+    <Compile Include="Entities\EncyclopediaDetails\WorldOfTanks\Tank.cs" />
+    <Compile Include="Entities\EncyclopediaDetails\WorldOfTanks\Turret.cs" />
+    <Compile Include="Entities\PlayerDetails\Achievement.cs" />
+    <Compile Include="Entities\PlayerDetails\Achievements.cs" />
+    <Compile Include="Entities\PlayerDetails\Clan.cs" />
+    <Compile Include="Entities\PlayerDetails\ClanStatistics.cs" />
+    <Compile Include="Entities\PlayerDetails\CompanyStatistics.cs" />
+    <Compile Include="Entities\PlayerDetails\OverallStatistics.cs" />
+    <Compile Include="Entities\PlayerDetails\Player.cs" />
+    <Compile Include="Entities\PlayerDetails\PlayerStatistics.cs" />
+    <Compile Include="Entities\PlayerDetails\PrivateData.cs" />
+    <Compile Include="Entities\PlayerDetails\Tank.cs" />
+    <Compile Include="Entities\PlayerDetails\TankStatistics.cs" />
+    <Compile Include="Entities\PlayerDetails\TeamStatistics.cs" />
+    <Compile Include="Enums\StatisticsType.cs" />
+    <Compile Include="Enums\BattleType.cs" />
+    <Compile Include="Interfaces\IWargamingApiManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\WargamingService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\DateTimeTools.cs" />
+    <Compile Include="WargamingManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WargamingApiService\WargamingApiService.csproj">
+      <Project>{15B3E0D2-6217-493A-A690-158C497F5318}</Project>
+      <Name>WargamingApiService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WargamingTypesLibrary\WargamingTypesLibrary.csproj">
+      <Project>{13e4d60b-8428-4b8c-846a-1e7ebecd6353}</Project>
+      <Name>WargamingTypesLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Service References\WargamingService\service.wsdl" />
+    <None Include="Service References\WargamingService\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WargamingService\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WargamingService\WargamingTypesLibrary.Enums.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\WargamingService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WargamingService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WargamingService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WargamingService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
