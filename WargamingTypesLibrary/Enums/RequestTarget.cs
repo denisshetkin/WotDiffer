@@ -1,4 +1,4 @@
-﻿namespace WargamingApiService.Enums
+﻿namespace WargamingTypesLibrary.Enums
 {
   public enum RequestTarget
   {
@@ -18,12 +18,12 @@
     ClanVictorypoints,
     ClanMembersinfo,
     EncyclopediaTanks,
-    EncyclopediaTankinfo,
-    EncyclopediaTankengines,
-    EncyclopediaTankturrets,
-    EncyclopediaTankradios,
-    EncyclopediaTankchassis,
-    EncyclopediaTankguns,
+    EncyclopediaTankInfo,
+    EncyclopediaTankEngines,
+    EncyclopediaTankTurrets,
+    EncyclopediaTankRadios,
+    EncyclopediaTankChassis,
+    EncyclopediaTankGuns,
     EncyclopediaAchievements,
     TanksStats,
     TanksAchievements

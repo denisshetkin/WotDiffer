@@ -99,12 +99,12 @@ namespace WargamingApiService
         { RequestTarget.ClanVictorypoints, "clan/victorypoints"},
         { RequestTarget.ClanMembersinfo, "clan/membersinfo"},
         { RequestTarget.EncyclopediaTanks, "encyclopedia/tanks"},
-        { RequestTarget.EncyclopediaTankinfo, "encyclopedia/tankinfo"},
-        { RequestTarget.EncyclopediaTankengines, "encyclopedia/tankengines"},
-        { RequestTarget.EncyclopediaTankturrets, "encyclopedia/tankturrets"},
-        { RequestTarget.EncyclopediaTankradios, "encyclopedia/tankradios"},
-        { RequestTarget.EncyclopediaTankchassis, "encyclopedia/tankchassis"},
-        { RequestTarget.EncyclopediaTankguns, "encyclopedia/tankguns"},
+        { RequestTarget.EncyclopediaTankInfo, "encyclopedia/tankinfo"},
+        { RequestTarget.EncyclopediaTankEngines, "encyclopedia/tankengines"},
+        { RequestTarget.EncyclopediaTankTurrets, "encyclopedia/tankturrets"},
+        { RequestTarget.EncyclopediaTankRadios, "encyclopedia/tankradios"},
+        { RequestTarget.EncyclopediaTankChassis, "encyclopedia/tankchassis"},
+        { RequestTarget.EncyclopediaTankGuns, "encyclopedia/tankguns"},
         { RequestTarget.EncyclopediaAchievements, "encyclopedia/achievements"},
         { RequestTarget.TanksStats,"tanks/stats"},
         { RequestTarget.TanksAchievements, "tanks/achievements"}
@@ -462,7 +462,7 @@ namespace WargamingApiService
 
     private string CreateVehicleDetailssRequestUri(IEnumerable<long> tankIds, Language? language, string responseFields)
     {
-      var sb = GetDefaultUri(RequestTarget.EncyclopediaTankinfo, language, responseFields: responseFields);
+      var sb = GetDefaultUri(RequestTarget.EncyclopediaTankInfo, language, responseFields: responseFields);
       sb.AppendFormat("&tank_id={0}", string.Join(",", tankIds));
 
       var requestUri = sb.ToString();
@@ -487,7 +487,7 @@ namespace WargamingApiService
 
     private string CreateEnginesRequestUri(long[] moduleIds, Language? language, Nation nation, string responseFields)
     {
-      var sb = GetDefaultUri(RequestTarget.EncyclopediaTankengines, language, responseFields: responseFields);
+      var sb = GetDefaultUri(RequestTarget.EncyclopediaTankEngines, language, responseFields: responseFields);
 
       if (nation != Nation.All)
         sb.AppendFormat("&nation={0}", GetNationName(nation));
@@ -517,7 +517,7 @@ namespace WargamingApiService
 
     private string CreateTurretsRequestUri(long[] moduleIds, Language? language, Nation nation, string responseFields)
     {
-      var sb = GetDefaultUri(RequestTarget.EncyclopediaTankturrets, language, responseFields: responseFields);
+      var sb = GetDefaultUri(RequestTarget.EncyclopediaTankTurrets, language, responseFields: responseFields);
 
       if (nation != Nation.All)
         sb.AppendFormat("&nation={0}", GetNationName(nation));
@@ -547,7 +547,7 @@ namespace WargamingApiService
 
     private string CreateRadiosRequestUri(long[] moduleIds, Language? language, Nation nation, string responseFields)
     {
-      var sb = GetDefaultUri(RequestTarget.EncyclopediaTankradios, language, responseFields: responseFields);
+      var sb = GetDefaultUri(RequestTarget.EncyclopediaTankRadios, language, responseFields: responseFields);
 
       if (nation != Nation.All)
         sb.AppendFormat("&nation={0}", GetNationName(nation));
@@ -564,12 +564,12 @@ namespace WargamingApiService
 
     #region Suspensions
 
-    public IResponse GetSuspensions(long moduleId)
+    public IResponse GetChassis(long moduleId)
     {
-      return GetSuspensions(new[] { moduleId });
+      return GetChassis(new[] { moduleId });
     }
 
-    public IResponse GetSuspensions(long[] moduleIds, Language? language = null, Nation nation = Nation.All, string responseFields = "")
+    public IResponse GetChassis(long[] moduleIds, Language? language = null, Nation nation = Nation.All, string responseFields = "")
     {
       var requestUri = CreateSuspensionsRequestUri(moduleIds, language, nation, responseFields);
       return GetRequestResponse(requestUri);
@@ -577,7 +577,7 @@ namespace WargamingApiService
 
     private string CreateSuspensionsRequestUri(long[] moduleIds, Language? language, Nation nation, string responseFields)
     {
-      var sb = GetDefaultUri(RequestTarget.EncyclopediaTankchassis, language, responseFields: responseFields);
+      var sb = GetDefaultUri(RequestTarget.EncyclopediaTankChassis, language, responseFields: responseFields);
 
       if (nation != Nation.All)
         sb.AppendFormat("&nation={0}", GetNationName(nation));
@@ -607,7 +607,7 @@ namespace WargamingApiService
 
     private string CreateGunsRequestUri(long[] moduleIds, Language? language, Nation nation, string responseFields)
     {
-      var sb = GetDefaultUri(RequestTarget.EncyclopediaTankguns, language, responseFields: responseFields);
+      var sb = GetDefaultUri(RequestTarget.EncyclopediaTankGuns, language, responseFields: responseFields);
 
       if (nation != Nation.All)
         sb.AppendFormat("&nation={0}", GetNationName(nation));

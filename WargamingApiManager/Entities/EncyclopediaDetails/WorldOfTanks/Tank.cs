@@ -203,18 +203,24 @@ namespace WargamingApiManager.Entities.EncyclopediaDetails.WorldOfTanks
         public decimal Weight { get; set; }
 
         [JsonProperty("chassis")]
-        public List<Chassis> Suspensions { get; set; }
+        public List<CompatibleModules> CompatibleChassis { get; set; }
 
         [JsonProperty("engines")]
-        public List<Engine> Engines { get; set; }
+        public List<CompatibleModules> CompatibleEngines { get; set; }
 
         [JsonProperty("guns")]
-        public List<Gun> Guns { get; set; }
+        public List<CompatibleModules> CompatibleGuns { get; set; }
 
         [JsonProperty("radios")]
-        public List<Radio> Radios { get; set; }
+        public List<CompatibleModules> CompatibleRadios { get; set; }
 
         [JsonProperty("turrets")]
+        public List<CompatibleModules> CompatibleTurrets { get; set; }
+
+        public List<Gun> Guns { get; set; }
+        public List<Chassis> Chassis { get; set; }
         public List<Turret> Turrets { get; set; }
+        public List<Engine> Engines { get; set; }
+        public List<Radio> Radios { get; set; }
     }
 }

@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Windows.Forms;
+using WargamingApiManager.Entities.PlayerDetails;
 using WargamingTypesLibrary.Enums;
 using WotApi;
 
@@ -21,15 +24,29 @@ namespace WindowsFormsApplication1
 
     private void button1_Click(object sender, EventArgs e)
     {
-      var returnValue = _manager.GetAllVehicles();
-      var sb = new StringBuilder();
+      List<Tank> returnValue = _manager.GetAllVehicles();
 
-      sb.AppendLine(string.Format("Tanks total: {0}", returnValue.Count));
+      dataGridView1.DataSource = returnValue;
+      dataGridView1.Update();
 
-      foreach (var source in returnValue.GroupBy(x=>x.Nation))
-        sb.AppendLine(string.Format("{0} tanks: {1}", source.Key, source.Count()));  
+      //var sb = new StringBuilder();
 
-      richTextBox1.Text = sb.ToString();
+      //sb.AppendLine(string.Format("Tanks total: {0}", returnValue.Count));
+
+      //foreach (var source in returnValue.GroupBy(x=>x.Nation))
+      //  sb.AppendLine(string.Format("{0} tanks: {1}", source.Key, source.Count()));  
+    }
+
+    private void button2_Click(object sender, EventArgs e)
+    {
+      var ids = textBox1.Text.Split(',').Select(x => Convert.ToInt64(x)).ToArray();
+
+      var details = _manager.GetVehicleDetails(ids);
+
+      _manager.GetAllVehicleDetails(details);
+
+      propertyGrid1.SelectedObject = details[0];
+      propertyGrid1.Update();
     }
 
     private static string GetNationName(Nation nation)
@@ -49,5 +66,6 @@ namespace WindowsFormsApplication1
       var name = Enum.GetName(typeof(SearchType), searchType);
       return name != null ? name.ToLowerInvariant() : string.Empty;
     }
+
   }
 }

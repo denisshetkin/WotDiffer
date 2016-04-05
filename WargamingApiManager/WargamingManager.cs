@@ -24,6 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 using WargamingApiManager.Entities.ClanDetails;
 using WargamingApiManager.Entities.EncyclopediaDetails.WorldOfTanks.Achievements;
@@ -703,30 +704,13 @@ namespace WotApi
     public List<Tank> GetVehicleDetails(long[] tankIds, Language language, string responseFields)
     {
       var response = _service.GetVehicleDetails(tankIds, language, responseFields);
-      var obj = JsonConvert.DeserializeObject<List<Tank>>(response.Data.ToString());
+      //var obj = JsonConvert.DeserializeObject<List<Tank>>(response.Data.ToString());
 
-      //var wgRawResponse = JsonConvert.DeserializeObject<Response>(output);
+      var data = new List<Tank>(response.Meta.Count);
+      foreach (var tankJObject in (response.Data as JObject).Children())
+        data.Add(tankJObject.First.ToObject<Tank>());
 
-      //var obj = new Response<List<Tank>
-      //{
-      //    Status = wgRawResponse.Status,
-      //    Count = wgRawResponse.Count,
-      //    Data = new List<Tank>(wgRawResponse.Count),
-      //};
-
-      //if (obj.Status != "ok")
-      //    return obj;
-
-      //var jObject = wgRawResponse.Data as JObject;
-
-      //foreach (var tankJObject in jObject.Children())
-      //{
-      //    var tank = tankJObject.First.ToObject<Tank>();
-
-      //    obj.Data.Add(tank);
-      //}
-
-      return obj;
+      return data;
     }
 
     #endregion Vehicle Details
@@ -892,7 +876,7 @@ namespace WotApi
 
     public List<Chassis> GetSuspensions(long[] moduleIds, Language language, Nation nation, string responseFields)
     {
-      var response = _service.GetSuspensions(moduleIds, language, nation, responseFields);
+      var response = _service.GetChassis(moduleIds, language, nation, responseFields);
       var obj = JsonConvert.DeserializeObject<List<Chassis>>(response.Data.ToString());
 
       //var wgRawResponse = JsonConvert.DeserializeObject<Response>(output);
@@ -1094,5 +1078,39 @@ namespace WotApi
     #endregion Vehicle achievements
 
     #endregion Player's vehicles
+
+    public void GetAllVehicleDetails(List<Tank> tanks)
+    {
+      foreach (var tank in tanks)
+      {
+        var compatibleChassis = _service.GetChassis(tank.CompatibleChassis.Select(x => x.ModuleId.Value).ToArray());
+        var compatibleGuns = _service.GetGuns(tank.CompatibleGuns.Select(x => x.ModuleId.Value).ToArray());
+        var compatibleEngines = _service.GetEngines(tank.CompatibleEngines.Select(x => x.ModuleId.Value).ToArray());
+        var compatibleRadios = _service.GetRadios(tank.CompatibleRadios.Select(x => x.ModuleId.Value).ToArray());
+        var compatibleTurrets = _service.GetTurrets(tank.CompatibleTurrets.Select(x => x.ModuleId.Value).ToArray());
+
+        tank.Chassis = new List<Chassis>();
+        foreach (var gun in (compatibleChassis.Data as JObject).Children())
+          tank.Chassis.Add(gun.First.ToObject<Chassis>());
+
+        tank.Guns = new List<Gun>();
+        foreach (var gun in (compatibleGuns.Data as JObject).Children())
+          tank.Guns.Add(gun.First.ToObject<Gun>());
+
+        tank.Engines = new List<Engine>();
+        foreach (var gun in (compatibleEngines.Data as JObject).Children())
+          tank.Engines.Add(gun.First.ToObject<Engine>());
+
+        tank.Radios = new List<Radio>();
+        foreach (var gun in (compatibleRadios.Data as JObject).Children())
+          tank.Radios.Add(gun.First.ToObject<Radio>());
+
+        tank.Turrets = new List<Turret>();
+        foreach (var gun in (compatibleTurrets.Data as JObject).Children())
+          tank.Turrets.Add(gun.First.ToObject<Turret>());
+
+        //tank.Guns = response.Data;
+      }
+    }
   }
 }

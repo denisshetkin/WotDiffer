@@ -273,7 +273,7 @@ namespace WargamingApiService
     /// <param name="nation">nation</param>
     /// <param name="responseFields">fields to be returned.</param>
     /// <returns></returns>
-    IResponse GetSuspensions(long[] moduleIds, Language? language, Nation nation, string responseFields);
+    IResponse GetChassis(long[] moduleIds, Language? language, Nation nation, string responseFields);
 
     /// <summary>
     /// Method returns list of radios.
