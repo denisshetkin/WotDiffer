@@ -1,0 +1,7 @@
+c:\users\d.shchetkin\documents\visual studio 2012\Projects\WcfServiceLibrary1\WargamingLibrary\bin\Debug\WargamingLibrary.dll
+c:\users\d.shchetkin\documents\visual studio 2012\Projects\WcfServiceLibrary1\WargamingLibrary\bin\Debug\WargamingLibrary.pdb
+c:\users\d.shchetkin\documents\visual studio 2012\Projects\WcfServiceLibrary1\WargamingLibrary\bin\Debug\Newtonsoft.Json.dll
+c:\users\d.shchetkin\documents\visual studio 2012\Projects\WcfServiceLibrary1\WargamingLibrary\bin\Debug\Newtonsoft.Json.xml
+c:\users\d.shchetkin\documents\visual studio 2012\Projects\WcfServiceLibrary1\WargamingLibrary\obj\Debug\WargamingLibrary.csprojResolveAssemblyReference.cache
+c:\users\d.shchetkin\documents\visual studio 2012\Projects\WcfServiceLibrary1\WargamingLibrary\obj\Debug\WargamingLibrary.dll
+c:\users\d.shchetkin\documents\visual studio 2012\Projects\WcfServiceLibrary1\WargamingLibrary\obj\Debug\WargamingLibrary.pdb

@@ -1,0 +1,12 @@
+C:\Users\d.shchetkin\Documents\Visual Studio 2012\Projects\WotDiffer\WargamingApiService\bin\Debug\WargamingApiService.dll.config
+C:\Users\d.shchetkin\Documents\Visual Studio 2012\Projects\WotDiffer\WargamingApiService\bin\Debug\WargamingApiService.dll
+C:\Users\d.shchetkin\Documents\Visual Studio 2012\Projects\WotDiffer\WargamingApiService\bin\Debug\WargamingApiService.pdb
+C:\Users\d.shchetkin\Documents\Visual Studio 2012\Projects\WotDiffer\WargamingApiService\bin\Debug\Newtonsoft.Json.dll
+C:\Users\d.shchetkin\Documents\Visual Studio 2012\Projects\WotDiffer\WargamingApiService\bin\Debug\WargamingTypesLibrary.dll
+C:\Users\d.shchetkin\Documents\Visual Studio 2012\Projects\WotDiffer\WargamingApiService\bin\Debug\WargamingTypesLibrary.pdb
+C:\Users\d.shchetkin\Documents\Visual Studio 2012\Projects\WotDiffer\WargamingApiService\obj\Debug\WargamingApiService.csprojResolveAssemblyReference.cache
+C:\Users\d.shchetkin\Documents\Visual Studio 2012\Projects\WotDiffer\WargamingApiService\obj\Debug\WargamingApiService.dll
+C:\Users\d.shchetkin\Documents\Visual Studio 2012\Projects\WotDiffer\WargamingApiService\obj\Debug\WargamingApiService.pdb
+C:\Users\d.shchetkin\Documents\Visual Studio 2012\Projects\WotDiffer\WargamingApiService\bin\Debug\Newtonsoft.Json.xml
+C:\Users\d.shchetkin\Documents\Visual Studio 2012\Projects\WotDiffer\WargamingApiService\bin\Debug\AutoMapper.dll
+C:\Users\d.shchetkin\Documents\Visual Studio 2012\Projects\WotDiffer\WargamingApiService\bin\Debug\AutoMapper.xml

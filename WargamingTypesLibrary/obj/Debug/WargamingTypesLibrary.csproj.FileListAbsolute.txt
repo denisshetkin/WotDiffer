@@ -1,0 +1,13 @@
+C:\Users\d.shchetkin\Documents\Visual Studio 2012\Projects\WotDiffer\WargamingLibrary\bin\Debug\WargamingTypesLibrary.dll
+C:\Users\d.shchetkin\Documents\Visual Studio 2012\Projects\WotDiffer\WargamingLibrary\bin\Debug\WargamingTypesLibrary.pdb
+C:\Users\d.shchetkin\Documents\Visual Studio 2012\Projects\WotDiffer\WargamingLibrary\obj\Debug\WargamingTypesLibrary.dll
+C:\Users\d.shchetkin\Documents\Visual Studio 2012\Projects\WotDiffer\WargamingLibrary\obj\Debug\WargamingTypesLibrary.pdb
+C:\Users\d.shchetkin\Documents\Visual Studio 2012\Projects\WotDiffer\WargamingTypesLibrary\bin\Debug\WargamingTypesLibrary.dll
+C:\Users\d.shchetkin\Documents\Visual Studio 2012\Projects\WotDiffer\WargamingTypesLibrary\bin\Debug\WargamingTypesLibrary.pdb
+C:\Users\d.shchetkin\Documents\Visual Studio 2012\Projects\WotDiffer\WargamingTypesLibrary\obj\Debug\WargamingTypesLibrary.dll
+C:\Users\d.shchetkin\Documents\Visual Studio 2012\Projects\WotDiffer\WargamingTypesLibrary\obj\Debug\WargamingTypesLibrary.pdb
+C:\Users\d.shchetkin\Documents\Visual Studio 2012\Projects\WotDiffer\WargamingTypesLibrary\bin\Debug\Newtonsoft.Json.dll
+C:\Users\d.shchetkin\Documents\Visual Studio 2012\Projects\WotDiffer\WargamingTypesLibrary\bin\Debug\Newtonsoft.Json.xml
+C:\Users\d.shchetkin\Documents\Visual Studio 2012\Projects\WotDiffer\WargamingTypesLibrary\bin\Debug\AutoMapper.dll
+C:\Users\d.shchetkin\Documents\Visual Studio 2012\Projects\WotDiffer\WargamingTypesLibrary\bin\Debug\AutoMapper.xml
+C:\Users\d.shchetkin\Documents\Visual Studio 2012\Projects\WotDiffer\WargamingTypesLibrary\obj\Debug\WargamingTypesLibrary.csprojResolveAssemblyReference.cache
